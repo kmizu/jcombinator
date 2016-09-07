@@ -20,12 +20,12 @@ public interface ParseResult<T> {
 		@Override
 		public <U> U fold(
 		  Function<Success<T>, U> succ,
-		  Function<Failure, U> fail) {
+		  Function<Failure<T>, U> fail) {
 			return succ.apply(this);
 		}
 	}
 	
-	public static class Failure implements ParseResult<Object> {		
+	public static class Failure<T> implements ParseResult<T> {		
 		private String message;
 		private String next;
 		public Failure(String message, String next) {
@@ -41,14 +41,14 @@ public interface ParseResult<T> {
 		
 		@Override
 		public <U> U fold(
-		  Function<Success<Object>, U> succ,
-		  Function<Failure, U> fail) {
+		  Function<Success<T>, U> succ,
+		  Function<Failure<T>, U> fail) {
 			return fail.apply(this);
 		}
 	}
 	
 	<U> U fold(
 		Function<Success<T>, U> succ,
-	    Function<Failure, U> fail
+	    Function<Failure<T>, U> fail
 	);
 }
