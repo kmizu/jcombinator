@@ -1,9 +1,9 @@
 package com.github.kmizu.jcombinator;
 
-public class Add<X, Y> implements Parser<Pair<X, Y>> {
+public class Cat<X, Y> implements Parser<Pair<X, Y>> {
 	private Parser<X> lhs;
 	private Parser<Y> rhs;
-	public Add(Parser<X> lhs, Parser<Y> rhs) {
+	public Cat(Parser<X> lhs, Parser<Y> rhs) {
 		this.lhs = lhs;
 		this.rhs = rhs;
 	}
