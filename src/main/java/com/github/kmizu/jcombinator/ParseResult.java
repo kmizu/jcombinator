@@ -11,10 +11,10 @@ public interface ParseResult<T> {
 			this.value = value;
 			this.next = next;
 		}
-		public T getValue() {
+		public T value() {
 			return value;
 		}
-		public String getNext() {
+		public String next() {
 			return next;
 		}
 		
@@ -38,10 +38,10 @@ public interface ParseResult<T> {
 			this.message = message;
 			this.next = next;
 		}
-		public String getMessage() {
+		public String message() {
 			return message;
 		}
-		public String getNext() {
+		public String next() {
 			return next;
 		}
 		

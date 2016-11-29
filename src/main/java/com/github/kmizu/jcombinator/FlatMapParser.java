@@ -15,7 +15,7 @@ public class FlatMapParser<T, R> implements Parser<R> {
     public ParseResult<R> invoke(String input) {
         ParseResult<T> result = parser.invoke(input);
         return result.fold(
-            (Success<T> success) -> fn.invoke(success.getValue()).invoke(success.getNext()),
+            (Success<T> success) -> fn.invoke(success.value()).invoke(success.next()),
             (Failure<T> failure) -> (Failure<R>)failure
         );
     }
