@@ -1,6 +1,7 @@
 package com.github.kmizu.jcombinator;
 
-import java.util.function.Function;
+import static com.github.kmizu.jcombinator.core.Functions.*;
+
 
 public interface ParseResult<T> {
 	public static class Success<T> implements ParseResult<T> {
@@ -19,9 +20,14 @@ public interface ParseResult<T> {
 		
 		@Override
 		public <U> U fold(
-		  Function<Success<T>, U> succ,
-		  Function<Failure<T>, U> fail) {
-			return succ.apply(this);
+		  Fn1<Success<T>, U> succ,
+		  Fn1<Failure<T>, U> fail) {
+			return succ.invoke(this);
+		}
+
+		@Override
+		public <U> ParseResult<U> map(Fn1<T, U> fn) {
+			return new Success<U>(fn.invoke(value), next);
 		}
 	}
 	
@@ -41,14 +47,21 @@ public interface ParseResult<T> {
 		
 		@Override
 		public <U> U fold(
-		  Function<Success<T>, U> succ,
-		  Function<Failure<T>, U> fail) {
-			return fail.apply(this);
+		  Fn1<Success<T>, U> succ,
+		  Fn1<Failure<T>, U> fail) {
+			return fail.invoke(this);
+		}
+
+		@Override
+		public <U> ParseResult<U> map(Fn1<T, U> fn) {
+			return (ParseResult<U>)this;
 		}
 	}
 	
 	<U> U fold(
-		Function<Success<T>, U> succ,
-	    Function<Failure<T>, U> fail
+		Fn1<Success<T>, U> succ,
+	    Fn1<Failure<T>, U> fail
 	);
+
+	<U> ParseResult<U> map(Fn1<T, U> fn);
 }

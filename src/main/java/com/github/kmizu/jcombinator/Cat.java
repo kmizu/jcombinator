@@ -16,11 +16,11 @@ public class Cat<X, Y> implements Parser<Pair<X, Y>> {
 	}
 	
 	@Override
-	public ParseResult<Pair<X, Y>> perform(String input) {
-		ParseResult<X> lresult = lhs.perform(input);
+	public ParseResult<Pair<X, Y>> invoke(String input) {
+		ParseResult<X> lresult = lhs.invoke(input);
 		return lresult.fold(
 		  (succ1) -> {			  
-			  ParseResult<Y> rresult = rhs.perform(succ1.getNext());
+			  ParseResult<Y> rresult = rhs.invoke(succ1.getNext());
 			  return rresult.fold(
 			    (succ2) -> new ParseResult.Success<>(new Pair<>(succ1.getValue(), succ2.getValue()), succ2.getNext()),
 			    (failure) -> {

@@ -16,11 +16,11 @@ public class Or<X> implements Parser<X> {
 	}
 	
 	@Override
-	public ParseResult<X> perform(String input) {
-		ParseResult<X> lresult = lhs.perform(input);
+	public ParseResult<X> invoke(String input) {
+		ParseResult<X> lresult = lhs.invoke(input);
 		return lresult.fold(
 		  succ -> succ,
-		  fail -> rhs.perform(input)
+		  fail -> rhs.invoke(input)
 		);
 	}
 }
