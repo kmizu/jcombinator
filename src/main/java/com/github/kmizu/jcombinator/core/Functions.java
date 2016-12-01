@@ -1,7 +1,13 @@
 package com.github.kmizu.jcombinator.core;
 
-public class Functions {
+import java.util.List;
 
+import com.github.kmizu.jcombinator.Tp2;
+
+public class Functions {
+	public static interface Fn0<R> {
+		R invoke();
+	}
     public static interface Fn1<T1, R> {
         R invoke(T1 arg);
     }
@@ -63,5 +69,30 @@ public class Functions {
 
     public static <T> void let(T value, Pr1<T> pr) {
         pr.invoke(value);
+    }
+    
+    public static <T, U> U foldLeft(List<T> list, U init, Fn1<Tp2<U, T>, U> f) {
+    	U result = init;
+    	for(T t:list) {
+    		result = f.invoke(new Tp2<>(result, t));
+    	}
+    	return result;
+    }
+    
+    public static <T> String join(List<T> list, String separator) {
+    	if(list.size() == 0) {
+    		return "";
+    	} else {
+    		return let(new StringBuilder(), builder -> {
+    		    T t = list.get(0);
+    		    List<T> es = list.subList(1, list.size());
+    			builder.append(t.toString());
+    			for(T e:es) {
+    				builder.append(separator);
+    				builder.append(e.toString());
+    			}
+    			return new String(builder);
+    		});
+    	}
     }
 }
