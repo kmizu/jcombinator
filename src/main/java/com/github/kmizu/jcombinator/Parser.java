@@ -41,8 +41,8 @@ public interface Parser<T> {
 	static Parser<String> string(String literal) {
 	    return new StringParser(literal);
 	}
-	static <T> Rule<T> rule() {
-		return new Rule<>();
+	static <T> Rule<T> rule(Fn0<Parser<T>> body) {
+		return new Rule<>(body);
 	}
 	static Parser<String> eof() {
 		return new EOFParser();

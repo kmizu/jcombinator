@@ -13,34 +13,36 @@ import static com.github.kmizu.jcombinator.core.Functions.*;
  * Unit test for simple Application.
  */
 public class ChainlTest extends TestCase {
-	private final Rule<Integer> expression = rule();
-	private final Rule<Integer> multitive = rule();
-	private final Rule<Integer> additive = rule();
-	private final Rule<Integer> primary = rule();
-	private final Rule<Integer> number = rule();
-	
-	{
-		expression.setBody(() -> 
-		    additive.cat(eof()).map(t -> t.fst())
+	private Rule<Integer> expression() {
+	    return rule(() ->
+			additive().cat(eof()).map(t -> t.fst())
 		);
-		multitive.setBody(() -> {
-			final Parser<Fn2<Integer, Integer, Integer>> Q = string("*").map(op -> (Integer lhs, Integer rhs) -> lhs * rhs);
-			final Parser<Fn2<Integer, Integer, Integer>> R = string("/").map(op -> (Integer lhs, Integer rhs) -> lhs / rhs);
-			return additive.chain(Q.or(R));
-		});
-		additive.setBody(() -> {
+	}
+	private Rule<Integer> additive() {
+		return rule(() -> {
 			final Parser<Fn2<Integer, Integer, Integer>> Q = string("+").map(op -> (Integer lhs, Integer rhs) -> lhs + rhs);
 			final Parser<Fn2<Integer, Integer, Integer>> R = string("-").map(op -> (Integer lhs, Integer rhs) -> lhs - rhs);
-			return primary.chain(Q.or(R));
+			return multitive().chain(Q.or(R));
 		});
-	    primary.setBody(() ->
-	        number.or(string("(").cat(expression).cat(string(")")).map(t ->
-	            t.fst().snd()
-	        )
-	    ));
-	    number.setBody(() ->
-	        digit().many1().map(digits -> Integer.parseInt(join(digits, "")))
-	    );
+	}
+	private Rule<Integer> multitive() {
+		return rule(() -> {
+			final Parser<Fn2<Integer, Integer, Integer>> Q = string("*").map(op -> (Integer lhs, Integer rhs) -> lhs * rhs);
+			final Parser<Fn2<Integer, Integer, Integer>> R = string("/").map(op -> (Integer lhs, Integer rhs) -> lhs / rhs);
+			return primary().chain(Q.or(R));
+		});
+	}
+
+	private final Rule<Integer> primary() {
+		return rule(() ->
+			number().or((string("(").cat(expression())).cat(string(")")).map(t -> t.fst().snd()))
+		);
+	}
+
+	private final Rule<Integer> number() {
+		return rule(() ->
+			digit().many1().map(digits -> Integer.parseInt(join(digits, "")))
+		);
 	}
 
     public ChainlTest()
@@ -54,13 +56,14 @@ public class ChainlTest extends TestCase {
     }
 
     public void testArithmetic() {
-    	number.invoke("100").onSuccess(s -> {
+	    Parser<Integer> arithmetic = expression();
+    	arithmetic.invoke("100").onSuccess(s -> {
     		assertEquals((Integer)100, s.value());
     	});
-    	expression.invoke("100+200").onSuccess(s -> {
+    	arithmetic.invoke("100+200").onSuccess(s -> {
     		assertEquals((Integer)300, s.value());
     	});
-    	expression.invoke("(1+2)*(3+4)").onSuccess(s -> {
+    	arithmetic.invoke("(1+2)*(3+4)").onSuccess(s -> {
     		assertEquals((Integer)21, s.value());
     	});
     }
