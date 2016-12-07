@@ -55,5 +55,8 @@ public class ChainlTest {
     	arithmetic.invoke("(1+2)*(3+4)").onSuccess(s -> {
     		assertEquals((Integer)21, s.value());
     	});
+        arithmetic.invoke("1+2*3+4").onSuccess(s -> {
+            assertEquals((Integer)11, s.value());
+        });
     }
 }
