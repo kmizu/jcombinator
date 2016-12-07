@@ -1,21 +1,19 @@
 package com.github.kmizu.jcombinator;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import java.util.List;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import static com.github.kmizu.jcombinator.Parser.*;
 import static com.github.kmizu.jcombinator.core.Functions.*;
 
-/**
- * Unit test for simple Application.
- */
-public class ChainlTest extends TestCase {
+@RunWith(JUnit4.class)
+public class ChainlTest {
 	private Rule<Integer> expression() {
 	    return rule(() ->
-			additive().cat(eof()).map(t -> t.fst())
+			additive().cat(eof()).map(t -> t.item1())
 		);
 	}
 	private Rule<Integer> additive() {
@@ -35,7 +33,7 @@ public class ChainlTest extends TestCase {
 
 	private final Rule<Integer> primary() {
 		return rule(() ->
-			number().or((string("(").cat(expression())).cat(string(")")).map(t -> t.fst().snd()))
+			number().or((string("(").cat(expression())).cat(string(")")).map(t -> t.item1().item2()))
 		);
 	}
 
@@ -45,17 +43,8 @@ public class ChainlTest extends TestCase {
 		);
 	}
 
-    public ChainlTest()
-    {
-    	super("Arithmetic");
-    }
-
-    public static Test suite()
-    {
-        return new TestSuite( ChainlTest.class );
-    }
-
-    public void testArithmetic() {
+	@Test
+    public void testExpression() {
 	    Parser<Integer> arithmetic = expression();
     	arithmetic.invoke("100").onSuccess(s -> {
     		assertEquals((Integer)100, s.value());

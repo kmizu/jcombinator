@@ -2,8 +2,6 @@ package com.github.kmizu.jcombinator.core;
 
 import java.util.List;
 
-import com.github.kmizu.jcombinator.Tp2;
-
 public class Functions {
 	public static interface Fn0<R> {
 		R invoke();
@@ -71,10 +69,10 @@ public class Functions {
         pr.invoke(value);
     }
     
-    public static <T, U> U foldLeft(List<T> list, U init, Fn1<Tp2<U, T>, U> f) {
+    public static <T, U> U foldLeft(List<T> list, U init, Fn1<Tuples.Tp2<U, T>, U> f) {
     	U result = init;
     	for(T t:list) {
-    		result = f.invoke(new Tp2<>(result, t));
+    		result = f.invoke(new Tuples.Tp2<>(result, t));
     	}
     	return result;
     }
