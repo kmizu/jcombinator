@@ -7,11 +7,11 @@ import java.util.regex.Pattern;
 import static com.github.kmizu.jcombinator.core.Functions.*;
 import static com.github.kmizu.jcombinator.core.Tuples.*;
 
-public class TokenizerSpecification<T> {
+public class TokenStreamSpecification<T> {
     private final List<Tp2<Pattern, Fn1<String, T>>> specs = new ArrayList<>();
     private Pattern skipPattern = Pattern.compile("(\\s)*");
 
-    public TokenizerSpecification() {
+    public TokenStreamSpecification() {
     }
 
     public final void register(Pattern pattern, Fn1<String, T> action) {
@@ -30,22 +30,39 @@ public class TokenizerSpecification<T> {
         this.skipPattern = Pattern.compile(skipPattern);
     }
 
-    public final Tokenizer tokenizer(String input) {
-        return new Tokenizer<T>(){
-            private String nextInput = input;
+    public final TokenStream<T> stream(String input) {
+        return new TokenStream<T>(){
+            private String next = input;
             private T currentToken;
-            @Override
-            public boolean moveNext() {
-                Matcher skipMatcher = skipPattern.matcher(nextInput);
+            private boolean terminal;
+
+            {
+                terminal = confirm();
+            }
+
+            public T head() {
+                return currentToken;
+            }
+
+            public TokenStream<T> tail() {
+                return stream(next);
+            }
+
+            public boolean isTerminal() {
+                return terminal;
+            }
+
+            public boolean confirm() {
+                Matcher skipMatcher = skipPattern.matcher(next);
                 if(skipMatcher.lookingAt()) {
-                    nextInput = nextInput.substring(skipMatcher.end());
+                    next = next.substring(skipMatcher.end());
                 }
                 for(Tp2<Pattern, Fn1<String, T>> spec:specs) {
                     boolean shouldHaveNext = spec.extract((pattern, action) -> {
-                        Matcher matcher = pattern.matcher(nextInput);
+                        Matcher matcher = pattern.matcher(next);
                         if(matcher.lookingAt()) {
-                            currentToken = action.invoke(nextInput.substring(matcher.start(), matcher.end()));
-                            nextInput = nextInput.substring(matcher.end());
+                            currentToken = action.invoke(next.substring(matcher.start(), matcher.end()));
+                            next = next.substring(matcher.end());
                             return true;
                         } else {
                             return false;
@@ -54,15 +71,6 @@ public class TokenizerSpecification<T> {
                     if(shouldHaveNext) return true;
                 }
                 return false;
-            }
-
-            @Override
-            public T current() {
-                return currentToken;
-            }
-
-            public String nextInput() {
-                return nextInput;
             }
         };
     }

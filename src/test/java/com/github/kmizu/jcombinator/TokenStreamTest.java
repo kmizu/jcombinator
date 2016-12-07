@@ -1,15 +1,15 @@
 package com.github.kmizu.jcombinator;
 
-import com.github.kmizu.jcombinator.tokenizer.Tokenizer;
-import com.github.kmizu.jcombinator.tokenizer.TokenizerSpecification;
-import static org.hamcrest.CoreMatchers.*;
+import com.github.kmizu.jcombinator.tokenizer.TokenStream;
+import com.github.kmizu.jcombinator.tokenizer.TokenStreamSpecification;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class TokenizerTest {
+public class TokenStreamTest {
     enum TokenType {
         IDENTIFIER,
         NUMBER,
@@ -62,8 +62,8 @@ public class TokenizerTest {
     }
 
     @Test
-    public void testTokenizer () {
-        TokenizerSpecification<Token> spec = new TokenizerSpecification<>();
+    public void testTokenStream () {
+        TokenStreamSpecification<Token> spec = new TokenStreamSpecification<>();
         spec.register("[a-zA-Z_][a-zA-Z0-9_]*", image -> new Token(image, TokenType.IDENTIFIER));
         spec.register("[0-9]+", image -> new Token(image, TokenType.NUMBER));
         spec.register("\\+", image -> new Token("+", TokenType.PLUS));
@@ -72,24 +72,24 @@ public class TokenizerTest {
         spec.register("/", image -> new Token("/", TokenType.DIV));
         spec.register("\\(", image -> new Token("(", TokenType.LPAREN));
         spec.register("\\)", image -> new Token(")", TokenType.RPAREN));
-        Tokenizer<Token> tokenizer = spec.tokenizer("100 + 200");
-        tokenizer.moveNext();
-        assertEquals(new Token("100", TokenType.NUMBER), tokenizer.current());
-        tokenizer.moveNext();
-        assertEquals(new Token("+", TokenType.PLUS), tokenizer.current());
-        tokenizer.moveNext();
-        assertEquals(new Token("200", TokenType.NUMBER), tokenizer.current());
+        TokenStream<Token> stream = spec.stream("100 + 200");
+        assertEquals(new Token("100", TokenType.NUMBER), stream.head());
+        stream = stream.tail();
+        assertEquals(new Token("+", TokenType.PLUS), stream.head());
+        stream = stream.tail();
+        assertEquals(new Token("200", TokenType.NUMBER), stream.head());
 
-        tokenizer = spec.tokenizer(" (100 + 200 )");
-        tokenizer.moveNext();
-        assertEquals(new Token("(", TokenType.LPAREN), tokenizer.current());
-        tokenizer.moveNext();
-        assertEquals(new Token("100", TokenType.NUMBER), tokenizer.current());
-        tokenizer.moveNext();
-        assertEquals(new Token("+", TokenType.PLUS), tokenizer.current());
-        tokenizer.moveNext();
-        assertEquals(new Token("200", TokenType.NUMBER), tokenizer.current());
-        tokenizer.moveNext();
-        assertEquals(new Token(")", TokenType.RPAREN), tokenizer.current());
+        stream = spec.stream(" (100 + 200 )");
+        assertEquals(new Token("(", TokenType.LPAREN), stream.head());
+        stream = stream.tail();
+        assertEquals(new Token("100", TokenType.NUMBER), stream.head());
+        stream = stream.tail();
+        assertEquals(new Token("+", TokenType.PLUS), stream.head());
+        stream = stream.tail();
+        assertEquals(new Token("200", TokenType.NUMBER), stream.head());
+        stream = stream.tail();
+        assertEquals(new Token(")", TokenType.RPAREN), stream.head());
+
+        assertTrue(stream.isTerminal());
     }
 }
