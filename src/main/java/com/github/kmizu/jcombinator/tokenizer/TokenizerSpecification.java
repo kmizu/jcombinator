@@ -19,6 +19,10 @@ public class TokenizerSpecification<T> {
         specs.add(new Tp2<>(pattern, action));
     }
 
+    public final void register(String pattern, Fn1<String, T> action) {
+        register(Pattern.compile(pattern), action);
+    }
+
     public final Tokenizer tokenizer() {
         return new Tokenizer<T>(){
             private String next = input;
