@@ -1,13 +1,13 @@
 package com.github.kmizu.jcombinator;
 
-import static com.github.kmizu.jcombinator.core.Functions.Fn1;
+import static com.github.kmizu.jcombinator.core.Functions.Function1;
 import static com.github.kmizu.jcombinator.ParseResult.*;
 
 public class FlatMapParser<T, R> implements Parser<R> {
-    private final Parser<T> parser;
-    private final Fn1<T, Parser<R>> fn;
+    private final Parser<T>               parser;
+    private final Function1<T, Parser<R>> fn;
 
-    public FlatMapParser(Parser<T> parser, Fn1<T, Parser<R>> fn) {
+    public FlatMapParser(Parser<T> parser, Function1<T, Parser<R>> fn) {
         this.parser = parser;
         this.fn = fn;
     }

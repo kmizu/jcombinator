@@ -2,7 +2,7 @@ package com.github.kmizu.jcombinator;
 
 import static com.github.kmizu.jcombinator.core.Functions.*;
 
-import com.github.kmizu.jcombinator.core.Functions.Pr1;
+import com.github.kmizu.jcombinator.core.Functions.Procedure1;
 
 
 public interface ParseResult<T> {
@@ -22,26 +22,26 @@ public interface ParseResult<T> {
 		
 		@Override
 		public <U> U fold(
-		  Fn1<Success<T>, U> succ,
-		  Fn1<Failure<T>, U> fail) {
+		  Function1<Success<T>, U> succ,
+		  Function1<Failure<T>, U> fail) {
 			return succ.invoke(this);
 		}
 	
 		@Override
 		public void fold(
-			Pr1<Success<T>> succ, 
-			Pr1<Failure<T>> fail
+			Procedure1<Success<T>> succ,
+			Procedure1<Failure<T>> fail
 		) {
 			succ.invoke(this);
 		}
 
 		@Override
-		public <U> ParseResult<U> map(Fn1<T, U> fn) {
+		public <U> ParseResult<U> map(Function1<T, U> fn) {
 			return new Success<U>(fn.invoke(value), next);
 		}
 
 		@Override
-		public void onSuccess(Pr1<Success<T>> succ) {
+		public void onSuccess(Procedure1<Success<T>> succ) {
 			succ.invoke(this);
 		}
 	}
@@ -62,41 +62,41 @@ public interface ParseResult<T> {
 		
 		@Override
 		public <U> U fold(
-		  Fn1<Success<T>, U> succ,
-		  Fn1<Failure<T>, U> fail) {
+		  Function1<Success<T>, U> succ,
+		  Function1<Failure<T>, U> fail) {
 			return fail.invoke(this);
 		}
 		
 		@Override
 		public void fold(
-			Pr1<Success<T>> succ, 
-			Pr1<Failure<T>> fail
+			Procedure1<Success<T>> succ,
+			Procedure1<Failure<T>> fail
 		) {
 			fail.invoke(this);
 		}
 
 		@Override
-		public <U> ParseResult<U> map(Fn1<T, U> fn) {
+		public <U> ParseResult<U> map(Function1<T, U> fn) {
 			return (ParseResult<U>)this;
 		}
 	    
 		@Override
-		public void onSuccess(Pr1<Success<T>> succ) {
+		public void onSuccess(Procedure1<Success<T>> succ) {
 			
 		}
 	}
 	
 	<U> U fold(
-		Fn1<Success<T>, U> succ,
-	    Fn1<Failure<T>, U> fail
+		Function1<Success<T>, U> succ,
+	    Function1<Failure<T>, U> fail
 	);
 	
 	void fold(
-		Pr1<Success<T>> succ,
-		Pr1<Failure<T>> fail
+		Procedure1<Success<T>> succ,
+		Procedure1<Failure<T>> fail
 	);
 	
-	void onSuccess(Pr1<Success<T>> succ);
+	void onSuccess(Procedure1<Success<T>> succ);
 
-	<U> ParseResult<U> map(Fn1<T, U> fn);
+	<U> ParseResult<U> map(Function1<T, U> fn);
 }

@@ -2,10 +2,10 @@ package com.github.kmizu.jcombinator.core;
 import com.github.kmizu.jcombinator.core.Functions.*;
 
 public class Tuples {
-    public static class Tp2<X, Y> {
+    public static class Tuple2<X, Y> {
         private X item1;
         private Y item2;
-        public Tp2(X item1, Y item2) {
+        public Tuple2(X item1, Y item2) {
             this.item1 = item1;
             this.item2 = item2;
         }
@@ -18,7 +18,7 @@ public class Tuples {
             return item2;
         }
 
-        public <U> U extract(Fn2<X, Y, U> f) {
+        public <U> U extract(Function2<X, Y, U> f) {
             return f.invoke(item1, item2);
         }
 
@@ -27,7 +27,7 @@ public class Tuples {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            Tp2<?, ?> tp2 = (Tp2<?, ?>) o;
+            Tuple2<?, ?> tp2 = (Tuple2<?, ?>) o;
 
             if (!item1.equals(tp2.item1)) return false;
             return item2.equals(tp2.item2);
@@ -42,15 +42,15 @@ public class Tuples {
 
         @Override
         public String toString() {
-            return "Tp2{" + "item1=" + item1 + ", item2=" + item2 + '}';
+            return "Tuple2{" + "item1=" + item1 + ", item2=" + item2 + '}';
         }
     }
-    public static final class Tp3<X, Y, Z> {
+    public static final class Tuple3<X, Y, Z> {
         private X item1;
         private Y item2;
         private Z item3;
 
-        public Tp3(X item1, Y item2, Z item3) {
+        public Tuple3(X item1, Y item2, Z item3) {
             this.item1 = item1;
             this.item2 = item2;
             this.item3 = item3;
@@ -68,7 +68,7 @@ public class Tuples {
             return item3;
         }
 
-        public <U> U extract(Fn3<X, Y, Z, U> f) {
+        public <U> U extract(Function3<X, Y, Z, U> f) {
             return f.invoke(item1, item2, item3);
         }
 
@@ -77,7 +77,7 @@ public class Tuples {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            Tp3<?, ?, ?> tp3 = (Tp3<?, ?, ?>) o;
+            Tuple3<?, ?, ?> tp3 = (Tuple3<?, ?, ?>) o;
 
             if (!item1.equals(tp3.item1)) return false;
             if (!item2.equals(tp3.item2)) return false;
@@ -95,7 +95,7 @@ public class Tuples {
 
         @Override
         public String toString() {
-            return "Tp3{" + "item1=" + item1 + ", item2=" + item2 + ", item3=" + item3 + '}';
+            return "Tuple3{" + "item1=" + item1 + ", item2=" + item2 + ", item3=" + item3 + '}';
         }
     }
 

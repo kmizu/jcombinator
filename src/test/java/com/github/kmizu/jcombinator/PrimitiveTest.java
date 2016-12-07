@@ -4,7 +4,7 @@ import com.github.kmizu.jcombinator.core.Tuples;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import static org.hamcrest.CoreMatchers.*;
+
 import static org.junit.Assert.*;
 
 import static com.github.kmizu.jcombinator.Parser.*;
@@ -53,7 +53,7 @@ public class PrimitiveTest {
         let(string("a").cat(string("b")), ab -> {
             ab.invoke("ab").fold(
                     (success) -> {
-                        assertEquals(new Tuples.Tp2<>("a", "b"), success.value());
+                        assertEquals(new Tuples.Tuple2<>("a", "b"), success.value());
                         assertEquals("", success.next());
                         return null;
                     },

@@ -18,15 +18,15 @@ public class ChainlTest {
 	}
 	private Rule<Integer> additive() {
 		return rule(() -> {
-			final Parser<Fn2<Integer, Integer, Integer>> Q = string("+").map(op -> (Integer lhs, Integer rhs) -> lhs + rhs);
-			final Parser<Fn2<Integer, Integer, Integer>> R = string("-").map(op -> (Integer lhs, Integer rhs) -> lhs - rhs);
+			final Parser<Function2<Integer, Integer, Integer>> Q = string("+").map(op -> (Integer lhs, Integer rhs) -> lhs + rhs);
+			final Parser<Function2<Integer, Integer, Integer>> R = string("-").map(op -> (Integer lhs, Integer rhs) -> lhs - rhs);
 			return multitive().chain(Q.or(R));
 		});
 	}
 	private Rule<Integer> multitive() {
 		return rule(() -> {
-			final Parser<Fn2<Integer, Integer, Integer>> Q = string("*").map(op -> (Integer lhs, Integer rhs) -> lhs * rhs);
-			final Parser<Fn2<Integer, Integer, Integer>> R = string("/").map(op -> (Integer lhs, Integer rhs) -> lhs / rhs);
+			final Parser<Function2<Integer, Integer, Integer>> Q = string("*").map(op -> (Integer lhs, Integer rhs) -> lhs * rhs);
+			final Parser<Function2<Integer, Integer, Integer>> R = string("/").map(op -> (Integer lhs, Integer rhs) -> lhs / rhs);
 			return primary().chain(Q.or(R));
 		});
 	}

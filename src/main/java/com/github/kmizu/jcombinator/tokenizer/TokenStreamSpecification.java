@@ -8,17 +8,17 @@ import static com.github.kmizu.jcombinator.core.Functions.*;
 import static com.github.kmizu.jcombinator.core.Tuples.*;
 
 public class TokenStreamSpecification<T> {
-    private final List<Tp2<Pattern, Fn1<String, T>>> specs = new ArrayList<>();
-    private Pattern skipPattern = Pattern.compile("(\\s)*");
+    private final List<Tuple2<Pattern, Function1<String, T>>> specs       = new ArrayList<>();
+    private Pattern                                           skipPattern = Pattern.compile("(\\s)*");
 
     public TokenStreamSpecification() {
     }
 
-    public final void register(Pattern pattern, Fn1<String, T> action) {
-        specs.add(new Tp2<>(pattern, action));
+    public final void register(Pattern pattern, Function1<String, T> action) {
+        specs.add(new Tuple2<>(pattern, action));
     }
 
-    public final void register(String pattern, Fn1<String, T> action) {
+    public final void register(String pattern, Function1<String, T> action) {
         register(Pattern.compile(pattern), action);
     }
 
@@ -57,7 +57,7 @@ public class TokenStreamSpecification<T> {
                 if(skipMatcher.lookingAt()) {
                     next = next.substring(skipMatcher.end());
                 }
-                for(Tp2<Pattern, Fn1<String, T>> spec:specs) {
+                for(Tuple2<Pattern, Function1<String, T>> spec:specs) {
                     boolean shouldHaveNext = spec.extract((pattern, action) -> {
                         Matcher matcher = pattern.matcher(next);
                         if(matcher.lookingAt()) {
