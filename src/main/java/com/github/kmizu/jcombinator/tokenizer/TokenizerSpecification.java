@@ -9,7 +9,7 @@ import static com.github.kmizu.jcombinator.core.Tuples.*;
 
 public class TokenizerSpecification<T> {
     private final List<Tp2<Pattern, Fn1<String, T>>> specs = new ArrayList<>();
-    private Pattern skipPattern = Pattern.compile("");
+    private Pattern skipPattern = Pattern.compile("¥¥s");
     private final String input;
 
     public TokenizerSpecification(String input) {
@@ -40,6 +40,9 @@ public class TokenizerSpecification<T> {
             public boolean moveNext() {
                 for(Tp2<Pattern, Fn1<String, T>> spec:specs) {
                     boolean shouldHaveNext = spec.extract((pattern, action) -> {
+                        Matcher skipMatcher = skipPattern.matcher(next);
+                        skipMatcher.find(0);
+                        next = next.substring(skipMatcher.start(), skipMatcher.end());
                         Matcher matcher = pattern.matcher(next);
                         if(matcher.find(0)) {
                             currentToken = action.invoke(next.substring(matcher.start(), matcher.end()));
