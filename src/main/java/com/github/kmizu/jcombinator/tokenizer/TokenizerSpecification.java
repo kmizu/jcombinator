@@ -9,6 +9,7 @@ import static com.github.kmizu.jcombinator.core.Tuples.*;
 
 public class TokenizerSpecification<T> {
     private final List<Tp2<Pattern, Fn1<String, T>>> specs = new ArrayList<>();
+    private Pattern skipPattern = Pattern.compile("");
     private final String input;
 
     public TokenizerSpecification(String input) {
@@ -23,19 +24,28 @@ public class TokenizerSpecification<T> {
         register(Pattern.compile(pattern), action);
     }
 
+    public final void registerSkipPattern(Pattern skipPattern) {
+        this.skipPattern = skipPattern;
+    }
+
+    public final void registerSkipPattern(String skipPattern) {
+        this.skipPattern = Pattern.compile(skipPattern);
+    }
+
     public final Tokenizer tokenizer() {
         return new Tokenizer<T>(){
             private String next = input;
-            private Tp2<Pattern, Fn1<String, T>> preparedSpec;
+            private T currentToken;
             @Override
-            public boolean hasNext() {
+            public boolean moveNext() {
                 for(Tp2<Pattern, Fn1<String, T>> spec:specs) {
                     boolean shouldHaveNext = spec.extract((pattern, action) -> {
-                        if(pattern.matcher(next).find(0)) {
-                            preparedSpec = spec;
+                        Matcher matcher = pattern.matcher(next);
+                        if(matcher.find(0)) {
+                            currentToken = action.invoke(next.substring(matcher.start(), matcher.end()));
                             return true;
                         } else {
-                            preparedSpec = null;
+                            currentToken = null;
                             return false;
                         }
                     });
@@ -45,14 +55,8 @@ public class TokenizerSpecification<T> {
             }
 
             @Override
-            public T next() {
-                return preparedSpec.extract((pattern, action) -> {
-                    Matcher matcher = pattern.matcher(next);
-                    matcher.find(0);
-                    String tokenImage = next.substring(matcher.start(), matcher.end());
-                    next = next.substring(tokenImage.length());
-                    return action.invoke(tokenImage);
-                });
+            public T current() {
+                return currentToken;
             }
         };
     }
