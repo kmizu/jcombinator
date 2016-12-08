@@ -1,6 +1,6 @@
 package com.github.kmizu.jcombinator;
 
-import com.github.kmizu.jcombinator.core.Tuples;
+import com.github.kmizu.jcombinator.core.Tuple2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -53,7 +53,7 @@ public class PrimitiveTest {
         let(string("a").cat(string("b")), ab -> {
             ab.invoke("ab").fold(
                     (success) -> {
-                        assertEquals(new Tuples.Tuple2<>("a", "b"), success.value());
+                        assertEquals(new Tuple2<>("a", "b"), success.value());
                         assertEquals("", success.next());
                         return null;
                     },

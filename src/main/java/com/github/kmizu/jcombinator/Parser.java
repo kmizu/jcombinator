@@ -1,9 +1,6 @@
 package com.github.kmizu.jcombinator;
 
-import com.github.kmizu.jcombinator.core.Function0;
-import com.github.kmizu.jcombinator.core.Function1;
-import com.github.kmizu.jcombinator.core.Function2;
-import com.github.kmizu.jcombinator.core.Tuples;
+import com.github.kmizu.jcombinator.core.*;
 
 import java.util.List;
 
@@ -14,7 +11,7 @@ public interface Parser<T> {
 	default Parser<T> or(Parser<T> rhs) {
 		return new Or<>(this, rhs);
 	}
-	default <U> Parser<Tuples.Tuple2<T, U>> cat(Parser<U> rhs) {
+	default <U> Parser<Tuple2<T, U>> cat(Parser<U> rhs) {
 		return new Cat<>(this, rhs);
 	}
 	default <U> Parser<U> map(Function1<T, U> fn) {
