@@ -1,5 +1,4 @@
 package com.github.kmizu.jcombinator.core;
-import com.github.kmizu.jcombinator.core.Functions.*;
 
 public class Tuples {
     public static class Tuple2<X, Y> {

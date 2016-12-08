@@ -1,5 +1,8 @@
 package com.github.kmizu.jcombinator;
 
+import com.github.kmizu.jcombinator.core.Function0;
+import com.github.kmizu.jcombinator.core.Function1;
+import com.github.kmizu.jcombinator.core.Function2;
 import com.github.kmizu.jcombinator.core.Tuples;
 
 import java.util.List;

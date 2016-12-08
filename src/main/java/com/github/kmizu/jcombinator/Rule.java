@@ -1,6 +1,6 @@
 package com.github.kmizu.jcombinator;
 
-import com.github.kmizu.jcombinator.core.Functions.Function0;
+import com.github.kmizu.jcombinator.core.Function0;
 
 public class Rule<T> implements Parser<T> {
 	private final Function0<Parser<T>> body;

@@ -1,6 +1,6 @@
 package com.github.kmizu.jcombinator;
 
-import static com.github.kmizu.jcombinator.core.Functions.Function1;
+import com.github.kmizu.jcombinator.core.Function1;
 import static com.github.kmizu.jcombinator.ParseResult.*;
 
 public class FlatMapParser<T, R> implements Parser<R> {
