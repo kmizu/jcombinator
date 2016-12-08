@@ -1,6 +1,6 @@
 package com.github.kmizu.jcombinator;
 
-import com.github.kmizu.jcombinator.core.Tuple2;
+import com.github.kmizu.jcombinator.datatype.Tuple2;
 
 public class Cat<X, Y> implements Parser<Tuple2<X, Y>> {
 	private Parser<X> lhs;

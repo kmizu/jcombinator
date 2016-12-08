@@ -1,4 +1,4 @@
-package com.github.kmizu.jcombinator.core;
+package com.github.kmizu.jcombinator.datatype;
 
 /**
  * @param <T1> the first argument type of this function

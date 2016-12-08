@@ -1,6 +1,6 @@
 package com.github.kmizu.jcombinator;
 
-import com.github.kmizu.jcombinator.core.Tuple2;
+import com.github.kmizu.jcombinator.datatype.Tuple2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 import static com.github.kmizu.jcombinator.Parser.*;
 import static com.github.kmizu.jcombinator.TestHelper.*;
-import static com.github.kmizu.jcombinator.core.Functions.*;
+import static com.github.kmizu.jcombinator.Functions.*;
 
 @RunWith(JUnit4.class)
 public class PrimitiveTest {

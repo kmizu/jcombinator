@@ -1,7 +1,7 @@
 package com.github.kmizu.jcombinator;
 
-import com.github.kmizu.jcombinator.core.Function1;
-import com.github.kmizu.jcombinator.core.Procedure1;
+import com.github.kmizu.jcombinator.datatype.Function1;
+import com.github.kmizu.jcombinator.datatype.Procedure1;
 
 
 public interface ParseResult<T> {

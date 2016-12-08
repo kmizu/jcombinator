@@ -1,10 +1,10 @@
 package com.github.kmizu.jcombinator;
 
-import com.github.kmizu.jcombinator.core.*;
+import com.github.kmizu.jcombinator.datatype.*;
 
 import java.util.List;
 
-import static com.github.kmizu.jcombinator.core.Functions.*;
+import static com.github.kmizu.jcombinator.Functions.*;
 
 public interface Parser<T> {
 	ParseResult<T> invoke(String input);

@@ -1,4 +1,4 @@
-package com.github.kmizu.jcombinator.core;
+package com.github.kmizu.jcombinator.datatype;
 
 /**
  * Created by kota_mizushima on 2016/12/08.

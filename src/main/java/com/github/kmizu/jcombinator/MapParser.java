@@ -1,6 +1,6 @@
 package com.github.kmizu.jcombinator;
 
-import com.github.kmizu.jcombinator.core.Function1;
+import com.github.kmizu.jcombinator.datatype.Function1;
 
 public class MapParser<T, R> implements Parser<R> {
     private final Parser<T>       parser;

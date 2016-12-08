@@ -1,4 +1,4 @@
-package com.github.kmizu.jcombinator.core;
+package com.github.kmizu.jcombinator.datatype;
 
 /**
  * @param <R> the return type of this function

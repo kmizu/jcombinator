@@ -1,4 +1,8 @@
-package com.github.kmizu.jcombinator.core;
+package com.github.kmizu.jcombinator;
+
+import com.github.kmizu.jcombinator.datatype.Function1;
+import com.github.kmizu.jcombinator.datatype.Procedure1;
+import com.github.kmizu.jcombinator.datatype.Tuple2;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.github.kmizu.jcombinator.tokenizer;
-import com.github.kmizu.jcombinator.core.Function1;
-import com.github.kmizu.jcombinator.core.Tuple2;
+import com.github.kmizu.jcombinator.datatype.Function1;
+import com.github.kmizu.jcombinator.datatype.Tuple2;
 
 import java.util.ArrayList;
 import java.util.List;
