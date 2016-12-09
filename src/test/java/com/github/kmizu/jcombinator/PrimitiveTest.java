@@ -22,11 +22,9 @@ public class PrimitiveTest {
             (success) -> {
                 assertEquals("Hello, World", success.value());
                 assertEquals("", success.next());
-                return null;
             },
             (failure) -> {
                assertTrue(false);
-               return null;
             }
         );
     }
@@ -38,11 +36,9 @@ public class PrimitiveTest {
                     (success) -> {
                         assertEquals(listOf("a", "a", "a", "a", "a"), success.value());
                         assertEquals("", success.next());
-                        return null;
                     },
                     (failure) -> {
                         assertTrue(false);
-                        return null;
                     }
             );
         });
@@ -55,11 +51,9 @@ public class PrimitiveTest {
                     (success) -> {
                         assertEquals(new Tuple2<>("a", "b"), success.value());
                         assertEquals("", success.next());
-                        return null;
                     },
                     (failure) -> {
                         assertTrue(false);
-                        return null;
                     }
             );
 
