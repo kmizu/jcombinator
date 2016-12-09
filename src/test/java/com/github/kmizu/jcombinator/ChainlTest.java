@@ -14,7 +14,7 @@ import static com.github.kmizu.jcombinator.Functions.*;
 public class ChainlTest {
 	private Rule<Integer> expression() {
 	    return rule(() ->
-			additive().cat(eof()).map(t -> t.item1())
+			additive().cat(eof()).map(t -> t.extract((result, __) -> result))
 		);
 	}
 	private Rule<Integer> additive() {
