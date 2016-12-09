@@ -19,3 +19,7 @@ To use jcombinator, Add the following lines to your pom.xml
     </dependency>
 </dependencies>
 ```
+
+## Usage
+
+See [JavaDoc](http://javadoc-badge.appspot.com/com.github.kmizu/jcombinator.svg?label=javadoc)](http://javadoc-badge.appsp    ot.com/com.github.kmizu/jcombinator/index.html#com.github.kmizu.jcombinator.package) and [Tests](https://github.com/kmizu/jcombinator/tree/releases%2F0.0.1/src/test/java/com/github/kmizu/jcombinator)
