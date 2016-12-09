@@ -4,7 +4,7 @@ import com.github.kmizu.jcombinator.datatype.Function1;
 
 /**
  * This parser translate the result value `T` to `R`
- * applying `Function<T, R>`.
+ * applying `Function&lt;T, R&gt;`.
  * @param <T> the value type before translation
  * @param <R> the value type after translation
  */

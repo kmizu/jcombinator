@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * This parser is like `parser+` in EBNF
- * The result value is `List<T>`.
+ * The result value is `List&lt;T&gt;`.
  *
  * @param <T> the type of List element
  */
