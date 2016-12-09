@@ -3,6 +3,13 @@ package com.github.kmizu.jcombinator;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This parser is like `parser*` in EBNF
+ * The result value is `List<T>`.
+ * Note that this parser always succeed even if `parser` doesn't match any input.
+ *
+ * @param <T> the type of List element
+ */
 public class ManyParser<T> implements Parser<List<T>> {
 	private Parser<T> parser;
 	public ManyParser(Parser<T> parser) {

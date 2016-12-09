@@ -1,5 +1,11 @@
 package com.github.kmizu.jcombinator;
 
+/**
+ * This parser represent ordered choice like
+ * `lhs / rhs`.  Note that `lhs / rhs` is not
+ * equal to `rhs / lhs`
+ * @param <X> the type of result value
+ */
 public class Or<X> implements Parser<X> {
 	private Parser<X> lhs;
 	private Parser<X> rhs;
@@ -7,11 +13,11 @@ public class Or<X> implements Parser<X> {
 		this.lhs = lhs;
 		this.rhs = rhs;
 	}
-	public Parser<X> getLhs() {
+	public Parser<X> lhs() {
 		return lhs;
 	}
 	
-	public Parser<X> getRhs() {
+	public Parser<X> rhs() {
 		return rhs;
 	}
 	

@@ -1,5 +1,9 @@
 package com.github.kmizu.jcombinator;
 
+/**
+ * This parser is like a character class like `[from-to]`
+ * `from` and `to` are both `char` type.
+ */
 public class RangeParser implements Parser<String> {
 	private final char from;
 	private final char to;
