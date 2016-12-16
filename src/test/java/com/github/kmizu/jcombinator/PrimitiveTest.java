@@ -32,6 +32,51 @@ public class PrimitiveTest {
     }
 
     @Test
+    public void testNot() {
+        Parser<String> notA = string("a").not();
+        notA.invoke("a").fold(
+            (success) -> {
+                assertTrue(false);
+            },
+            (failure) -> {
+                assertEquals("a", failure.next());
+            }
+        );
+        notA.invoke("b").fold(
+            (success) -> {
+                assertEquals(null, success.value());
+                assertEquals("b", success.next());
+            },
+            (failure) -> {
+                assertTrue(false);
+            }
+        );
+    }
+
+    @Test
+    public void testOr() {
+        Parser<String> aOrB = string("a").or(string("b"));
+        aOrB.invoke("a").fold(
+            (success) -> {
+                assertEquals("a", success.value());
+                assertEquals("", success.next());
+            },
+            (failure) -> {
+                assertTrue(false);
+            }
+        );
+        aOrB.invoke("b").fold(
+            (success) -> {
+                assertEquals("b", success.value());
+                assertEquals("", success.next());
+            },
+            (failure) -> {
+                assertTrue(false);
+            }
+        );
+    }
+
+    @Test
     public void testOptionParser() {
         let(string("a").option(), ax -> {
             ax.invoke("a").fold(
@@ -50,6 +95,38 @@ public class PrimitiveTest {
                 },
                 (fail) -> {
                     assertTrue(false);
+                }
+            );
+        });
+    }
+
+    @Test
+    public void testSetParser() {
+        let(set('a', 'b'), ax -> {
+            ax.invoke("a").fold(
+                (success) -> {
+                    assertEquals("a", success.value());
+                    assertEquals("",success.next());
+                },
+                (failure) -> {
+                    assertTrue(false);
+                }
+            );
+            ax.invoke("b").fold(
+                (success) -> {
+                    assertEquals("b", success.value());
+                    assertEquals("", success.next());
+                },
+                (failure) -> {
+                    assertTrue(false);
+                }
+            );
+            ax.invoke("c").fold(
+                (success) -> {
+                    assertTrue(false);
+                },
+                (failure) -> {
+                    assertEquals("c", failure.next());
                 }
             );
         });
