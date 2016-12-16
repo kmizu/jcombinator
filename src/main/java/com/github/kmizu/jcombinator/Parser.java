@@ -3,6 +3,7 @@ package com.github.kmizu.jcombinator;
 import com.github.kmizu.jcombinator.datatype.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.github.kmizu.jcombinator.Functions.*;
 
@@ -20,6 +21,7 @@ public interface Parser<T> {
 	default <U> Parser<U> flatMap(Function1<T, Parser<U>> fn) {
 		return new FlatMapParser<>(this, fn);
 	}
+	default Parser<Optional<T>> option() { return new OptionParser<T>(this); }
 	default Parser<List<T>> many() {
 		return new ManyParser<T>(this);
 	}
@@ -38,6 +40,9 @@ public interface Parser<T> {
 			});
 		}));
 	}
+	default Parser<T> not() { return new Not<>(this); }
+	default Parser<T> and() { return new And<>(this); }
+	static Parser<String> any() { return new AnyParser(); }
 	static Parser<String> string(String literal) {
 	    return new StringParser(literal);
 	}
@@ -49,6 +54,13 @@ public interface Parser<T> {
 	}
 	static RangeParser range(char from, char to) {
 		return new RangeParser(from, to);
+	}
+	static SetParser set(char... characters) {
+		java.util.Set<Character> set = new java.util.HashSet<>();
+		for(char ch:characters) {
+		    set.add(ch);
+		}
+		return new SetParser(set);
 	}
 	static Parser<String> alphabet() {
 		return range('a', 'z').or(range('A', 'Z'));

@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 import static com.github.kmizu.jcombinator.Parser.*;
@@ -27,6 +29,30 @@ public class PrimitiveTest {
                assertTrue(false);
             }
         );
+    }
+
+    @Test
+    public void testOptionParser() {
+        let(string("a").option(), ax -> {
+            ax.invoke("a").fold(
+                (succ) -> {
+                    assertEquals(Optional.of("a"), succ.value());
+                    assertEquals("", succ.next());
+                },
+                (fail) -> {
+                    assertTrue(false);
+                }
+            );
+            ax.invoke("b").fold(
+                (succ) -> {
+                    assertEquals(Optional.empty(), succ.value());
+                    assertEquals("b", succ.next());
+                },
+                (fail) -> {
+                    assertTrue(false);
+                }
+            );
+        });
     }
 
     @Test
