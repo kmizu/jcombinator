@@ -16,7 +16,7 @@ public class RegexParser {
             final Parser<Function2<AstNode.RExpression, AstNode.RExpression, AstNode.RExpression>> Q = string("|").map(__ ->
                 (lhs, rhs) -> new AstNode.RChoice(lhs, rhs)
             );
-            return repeatable().chain(Q);
+            return concatenative().chain(Q);
         });
     }
 
