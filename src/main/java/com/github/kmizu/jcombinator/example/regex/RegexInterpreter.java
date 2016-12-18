@@ -77,18 +77,13 @@ public class RegexInterpreter {
         @Override
         public Boolean visitRChoice(AstNode.RChoice node, SuccessfullContinuation context) {
             final int start = cursor;
-            final Function0<Boolean> onFailAlt = () -> {
+            boolean lhsMatched = node.getLhs().accept(this, context);
+            if(lhsMatched) {
+                return true;
+            } else {
                 cursor = start;
                 return node.getRhs().accept(this, context);
-            };
-            final SuccessfullContinuation onSuccess = () -> {
-                if(context.invoke()) {
-                    return true;
-                } else {
-                    return onFailAlt.invoke();
-                }
-            };
-            return node.getLhs().accept(this, onSuccess);
+            }
         }
 
         @Override
@@ -136,6 +131,7 @@ public class RegexInterpreter {
 
     public static void main(String[] args) {
         RegexInterpreter i = new RegexInterpreter();
-        System.out.println(i.matches("a*aaaa", "aaa"));
+        System.out.println(i.matches("a*aaa", "aaa"));
+        System.out.println(i.matches("(a*|xxx)y(bca)*(x|y)d", "xxxybcabcaxd"));
     }
 }
