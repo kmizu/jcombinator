@@ -14,7 +14,7 @@ public class RegexParser {
     public Rule<AstNode.RExpression> alternative() {
         return rule(() -> {
             final Parser<Function2<AstNode.RExpression, AstNode.RExpression, AstNode.RExpression>> Q = string("|").map(__ ->
-                (lhs, rhs) -> new AstNode.RChoice(lhs, rhs)
+                AstNode.RChoice::new
             );
             return concatenative().chain(Q);
         });
@@ -23,7 +23,7 @@ public class RegexParser {
     public Rule<AstNode.RExpression> concatenative() {
         return rule(() -> {
             final Parser<Function2<AstNode.RExpression, AstNode.RExpression, AstNode.RExpression>> Q = string("").map(__ ->
-                (lhs, rhs) -> new AstNode.RSequence(lhs, rhs)
+                AstNode.RSequence::new
             );
             return repeatable().chain(Q);
         });
