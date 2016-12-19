@@ -5,6 +5,7 @@ import com.sun.org.apache.regexp.internal.RE;
 public class AstNode {
     public interface RVisitor<R, C> {
         public R visitRGrouped(RGrouped node, C context);
+        public R visitRAny(RAny node, C context);
         public R visitRString(RString node, C context);
         public R visitRChoice(RChoice node, C context);
         public R visitRSequence(RSequence node, C context);
@@ -28,6 +29,15 @@ public class AstNode {
         @Override
         public <R, C> R accept(RVisitor<R, C> visitor, C context) {
             return visitor.visitRString(this, context);
+        }
+    }
+    public static class RAny extends RExpression {
+        public RAny() {
+        }
+
+        @Override
+        public <R, C> R accept(RVisitor<R, C> visitor, C context) {
+            return visitor.visitRAny(this, context);
         }
     }
     public static class RChoice extends RExpression {

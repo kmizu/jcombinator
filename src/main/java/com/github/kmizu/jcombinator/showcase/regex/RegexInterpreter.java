@@ -18,6 +18,11 @@ public class RegexInterpreter {
         }
 
         @Override
+        public AstNode.RExpression visitRAny(AstNode.RAny node, Void context) {
+            return node;
+        }
+
+        @Override
         public AstNode.RExpression visitRChoice(AstNode.RChoice node, Void context) {
             return new AstNode.RChoice(
                 node.getLhs().accept(this, context),
@@ -68,6 +73,17 @@ public class RegexInterpreter {
             String slice = input.substring(cursor);
             if(slice.startsWith(node.getLiteral())) {
                 cursor += node.getLiteral().length();
+                return context.invoke();
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public Boolean visitRAny(AstNode.RAny node, SuccessfullContinuation context) {
+            String slice = input.substring(cursor);
+            if(slice.length() > 0) {
+                cursor++;
                 return context.invoke();
             } else {
                 return false;

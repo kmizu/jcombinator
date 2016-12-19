@@ -44,7 +44,7 @@ public class RegexParser {
 
     public Rule<AstNode.RExpression> primary() {
         return rule(() ->
-            grouped().or(single()).or(escaped())
+            grouped().or(single()).or(escaped()).or(rany())
         );
     }
 
@@ -64,9 +64,14 @@ public class RegexParser {
             string("\\").cat(meta()).map(t -> new AstNode.RString(t.item2()))
         );
     }
+    public Rule<AstNode.RExpression> rany() {
+        return rule(() ->
+            string(".").map(__ -> new AstNode.RAny())
+        );
+    }
     public Rule<String> meta() {
         return rule(() ->
-                set('|', '*', '+', '(', ')', '\\')
+            set('|', '*', '+', '(', ')', '.', '\\')
         );
     }
 }
