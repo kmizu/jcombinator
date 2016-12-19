@@ -1,4 +1,4 @@
-package com.github.kmizu.jcombinator.example.regex;
+package com.github.kmizu.jcombinator.showcase.regex;
 
 import static com.github.kmizu.jcombinator.Parser.*;
 import com.github.kmizu.jcombinator.*;

@@ -1,4 +1,4 @@
-package com.github.kmizu.jcombinator.example.regex;
+package com.github.kmizu.jcombinator.showcase.regex;
 
 import com.github.kmizu.jcombinator.ParseResult;
 import com.github.kmizu.jcombinator.datatype.Function0;

@@ -1,4 +1,4 @@
-package com.github.kmizu.jcombinator.example.regex;
+package com.github.kmizu.jcombinator.showcase.regex;
 
 import com.sun.org.apache.regexp.internal.RE;
 
